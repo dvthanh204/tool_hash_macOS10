@@ -1,0 +1,48 @@
+name: Build macOS App Shell
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Compile Swift Code
+        run: |
+          mkdir -p build_output
+          
+          # Build x86_64 slice (macOS 10.15+)
+          swiftc -parse-as-library -target x86_64-apple-macosx10.15 -O \
+            $(find TeachingProtect -name "*.swift") \
+            -o SlideLock_x86_64
+            
+          # Build arm64 slice (macOS 11.0+)
+          swiftc -parse-as-library -target arm64-apple-macosx11.0 -O \
+            $(find TeachingProtect -name "*.swift") \
+            -o SlideLock_arm64
+            
+          # Combine into Universal Binary
+          lipo -create -output build_output/SlideLock SlideLock_x86_64 SlideLock_arm64
+
+      - name: Package App Shell
+        run: |
+          # Use the Info.plist from ma_hoa_mac10 which is set to 10.15.7
+          cp -R ma_hoa_mac10/SlideLock.app build_output/SlideLock.app
+          
+          # Replace the binary
+          cp build_output/SlideLock build_output/SlideLock.app/Contents/MacOS/SlideLock
+          chmod +x build_output/SlideLock.app/Contents/MacOS/SlideLock
+          
+          # Zip it up
+          cd build_output
+          zip -r SlideLock-App-Shell-MacOS.zip SlideLock.app
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SlideLock-App-Shell-MacOS
+          path: build_output/SlideLock-App-Shell-MacOS.zip
