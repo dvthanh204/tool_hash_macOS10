@@ -1,18 +1,10 @@
 import SwiftUI
 import AppKit
 
-@main
 class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow!
     
     var appState = AppState()
-
-    static func main() {
-        let app = NSApplication.shared
-        let delegate = AppDelegate()
-        app.delegate = delegate
-        app.run()
-    }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let contentView = RootView().environmentObject(appState)
