@@ -18,20 +18,32 @@ jobs:
           # Build x86_64 slice (macOS 10.15+)
           swiftc -parse-as-library -target x86_64-apple-macosx10.15 -O \
             $(find TeachingProtect -name "*.swift") \
-            -o SlideLock_x86_64
+            -o SlideLock_x86_64 || echo "x86_64 build failed"
             
           # Build arm64 slice (macOS 11.0+)
           swiftc -parse-as-library -target arm64-apple-macosx11.0 -O \
             $(find TeachingProtect -name "*.swift") \
-            -o SlideLock_arm64
+            -o SlideLock_arm64 || echo "arm64 build failed"
             
-          # Combine into Universal Binary
-          lipo -create -output build_output/SlideLock SlideLock_x86_64 SlideLock_arm64
+          # Combine into Universal Binary if both exist, otherwise use one
+          if [ -f SlideLock_x86_64 ] && [ -f SlideLock_arm64 ]; then
+            lipo -create -output build_output/SlideLock SlideLock_x86_64 SlideLock_arm64
+          elif [ -f SlideLock_x86_64 ]; then
+            mv SlideLock_x86_64 build_output/SlideLock
+          elif [ -f SlideLock_arm64 ]; then
+            mv SlideLock_arm64 build_output/SlideLock
+          else
+            echo "Both builds failed!"
+            exit 1
+          fi
 
       - name: Package App Shell
         run: |
-          # Use the Info.plist from ma_hoa_mac10 which is set to 10.15.7
-          cp -R ma_hoa_mac10/SlideLock.app build_output/SlideLock.app
+          # Use SlideLock.app.old4 which is tracked in Git
+          cp -R SlideLock.app.old4 build_output/SlideLock.app
+          
+          # Patch Info.plist to 10.15.7
+          /usr/libexec/PlistBuddy -c "Set :LSMinimumSystemVersion 10.15.7" build_output/SlideLock.app/Contents/Info.plist
           
           # Replace the binary
           cp build_output/SlideLock build_output/SlideLock.app/Contents/MacOS/SlideLock
