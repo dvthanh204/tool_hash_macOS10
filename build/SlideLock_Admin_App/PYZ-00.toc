@@ -1,4 +1,4 @@
-('D:\\code\\python\\tool_hash_macOS\\build\\SlideLock_Admin_App\\PYZ-00.pyz',
+('D:\\code\\python\\tool_hash_macOS10\\build\\SlideLock_Admin_App\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PIL\\__init__.py',
    'PYMODULE'),

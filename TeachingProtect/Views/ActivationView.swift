@@ -13,7 +13,7 @@ struct ActivationView: View {
             VStack(spacing: 30) {
                 
                 VStack(spacing: 12) {
-                    Image(systemName: "lock.shield.fill")
+                    Text("🔒")
                         .font(.system(size: 64, weight: .semibold))
                         .foregroundColor(.blue)
                         .shadow(color: .blue.opacity(0.3), radius: 10, x: 0, y: 5)
@@ -43,7 +43,7 @@ struct ActivationView: View {
                             NSPasteboard.general.clearContents()
                             NSPasteboard.general.setString(MachineID.current, forType: .string)
                         } label: {
-                            Image(systemName: "doc.on.clipboard")
+                            Text("📋")
                                 .font(.system(size: 16))
                                 .foregroundColor(.blue)
                         }
@@ -85,7 +85,7 @@ struct ActivationView: View {
                 Button(action: activate) {
                     HStack {
                         Spacer()
-                        Image(systemName: "key.fill")
+                        Text("🔑")
                         Text(isActivating ? "ĐANG XÁC THỰC..." : "MỞ BÀI GIẢNG")
                             .fontWeight(.bold)
                         Spacer()

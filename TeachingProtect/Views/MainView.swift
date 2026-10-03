@@ -31,9 +31,9 @@ struct MainView: View {
                         HStack(spacing: 16) {
                             ZStack {
                                 Circle()
-                                    .fill(LinearGradient(colors: [.blue, .blue], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                    .fill(LinearGradient(gradient: Gradient(colors: [.blue, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
                                     .frame(width: 36, height: 36)
-                                Image(systemName: "play.rectangle.fill")
+                                Text("▶")
                                     .foregroundColor(.white)
                                     .font(.system(size: 14))
                             }
@@ -108,7 +108,7 @@ struct MainView: View {
                             .font(.system(size: 14, weight: .medium))
                             .foregroundColor(.blue)
                     } else {
-                        Image(systemName: lessons.isEmpty ? "exclamationmark.triangle" : "app.dashed")
+                        Text(lessons.isEmpty ? "⚠️" : "📄")
                             .font(.system(size: 50))
                             .foregroundColor(lessons.isEmpty ? .orange : .secondary.opacity(0.5))
                         Text(statusMessage)
