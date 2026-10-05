@@ -58,7 +58,7 @@ struct MainView: View {
                                     .foregroundColor(isProcessing ? .gray : .blue)
                                     .cornerRadius(20)
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(PlainButtonStyle())
                             .disabled(isProcessing)
                         }
                         .padding(.vertical, 8)
@@ -69,7 +69,7 @@ struct MainView: View {
                         .padding(.vertical, 4)
                         .padding(.horizontal, 8)
                     }
-                    .listStyle(.plain)
+                    .listStyle(PlainListStyle())
                     
                     if lessons.isEmpty {
                         VStack(spacing: 12) {
@@ -88,7 +88,7 @@ struct MainView: View {
                                     .foregroundColor(.white)
                                     .cornerRadius(8)
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(PlainButtonStyle())
                         }
                         .padding()
                     }

@@ -14,7 +14,5 @@
     <string>1.0</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.15.7</string>
-    <key>NSSupportsAutomaticGraphicsSwitching</key>
-    <true/>
 </dict>
 </plist>

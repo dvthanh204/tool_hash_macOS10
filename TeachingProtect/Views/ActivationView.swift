@@ -47,7 +47,7 @@ struct ActivationView: View {
                                 .font(.system(size: 16))
                                 .foregroundColor(.blue)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(PlainButtonStyle())
                     }
                     .padding(16)
                     .background(Color(NSColor.controlBackgroundColor))
@@ -67,7 +67,7 @@ struct ActivationView: View {
                         .foregroundColor(.secondary)
                         
                     TextField("VD: L3X2...", text: $licenseKey)
-                        .textFieldStyle(.plain)
+                        .textFieldStyle(PlainTextFieldStyle())
                         .font(.system(size: 16, weight: .medium, design: .monospaced))
                         .padding(16)
                         .background(Color(NSColor.controlBackgroundColor))
@@ -95,7 +95,7 @@ struct ActivationView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PlainButtonStyle())
                 .disabled(licenseKey.isEmpty || isActivating)
                 .contentShape(Rectangle())
             }
