@@ -23,13 +23,7 @@ public struct MachineID {
     }
     
     private static func getMacSerialNumber() -> String {
-        // macOS 12+ requires kIOMainPortDefault instead of kIOMasterPortDefault
-        var platformExpert: io_service_t = 0
-        if #available(macOS 12.0, *) {
-            platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
-        } else {
-            platformExpert = IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice"))
-        }
+        let platformExpert: io_service_t = IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice"))
         
         guard platformExpert != 0 else { return "UNKNOWN-SERIAL" }
         defer { IOObjectRelease(platformExpert) }
@@ -41,12 +35,7 @@ public struct MachineID {
     }
     
     private static func getHardwareUUID() -> String {
-        var platformExpert: io_service_t = 0
-        if #available(macOS 12.0, *) {
-            platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
-        } else {
-            platformExpert = IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice"))
-        }
+        let platformExpert: io_service_t = IOServiceGetMatchingService(0, IOServiceMatching("IOPlatformExpertDevice"))
         
         guard platformExpert != 0 else { return "UNKNOWN-UUID" }
         defer { IOObjectRelease(platformExpert) }
