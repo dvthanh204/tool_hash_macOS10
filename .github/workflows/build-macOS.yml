@@ -18,7 +18,18 @@ jobs:
           # Build x86_64 slice (macOS 10.15+) - Runs natively on Intel, and via Rosetta 2 on Apple Silicon
           swiftc -target x86_64-apple-macosx10.15 -O \
             $(find TeachingProtect -name "*.swift") \
-            -o build_output/SlideLock || { echo "x86_64 build failed"; exit 1; }
+            -o build_output/SlideLock > build_error.txt 2>&1 || {
+              echo "x86_64 build failed"
+              cat build_error.txt
+              exit 1
+            }
+          
+      - name: Upload Compilation Error Log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-Error-Log
+          path: build_error.txt
 
       - name: Package App Shell
         run: |
