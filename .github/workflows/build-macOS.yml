@@ -16,12 +16,12 @@ jobs:
           mkdir -p build_output
           
           # Build x86_64 slice (macOS 10.15+)
-          swiftc -parse-as-library -target x86_64-apple-macosx10.15 -O \
+          swiftc -target x86_64-apple-macosx10.15 -O \
             $(find TeachingProtect -name "*.swift") \
             -o SlideLock_x86_64 || echo "x86_64 build failed"
             
           # Build arm64 slice (macOS 11.0+)
-          swiftc -parse-as-library -target arm64-apple-macosx11.0 -O \
+          swiftc -target arm64-apple-macosx11.0 -O \
             $(find TeachingProtect -name "*.swift") \
             -o SlideLock_arm64 || echo "arm64 build failed"
             
