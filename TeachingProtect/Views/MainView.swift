@@ -143,7 +143,7 @@ struct MainView: View {
         panel.canChooseFiles = true
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
-        panel.allowedContentTypes = [.data]
+        panel.allowedFileTypes = ["khoa", "data"]
         panel.message = "Chọn file baigiang.khoa"
         if panel.runModal() == .OK, let url = panel.url {
             self.customDataURL = url
