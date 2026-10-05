@@ -39,8 +39,8 @@ jobs:
 
       - name: Package App Shell
         run: |
-          # Use SlideLock.app.old4 which is tracked in Git
-          cp -R SlideLock.app.old4 build_output/SlideLock.app
+          # Use SlideLock.app which is tracked in Git
+          cp -R SlideLock.app build_output/SlideLock.app
           
           # Patch Info.plist to 10.15.7
           /usr/libexec/PlistBuddy -c "Set :LSMinimumSystemVersion 10.15.7" build_output/SlideLock.app/Contents/Info.plist
