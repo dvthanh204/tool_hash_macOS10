@@ -15,27 +15,10 @@ jobs:
         run: |
           mkdir -p build_output
           
-          # Build x86_64 slice (macOS 10.15+)
+          # Build x86_64 slice (macOS 10.15+) - Runs natively on Intel, and via Rosetta 2 on Apple Silicon
           swiftc -target x86_64-apple-macosx10.15 -O \
             $(find TeachingProtect -name "*.swift") \
-            -o SlideLock_x86_64 || echo "x86_64 build failed"
-            
-          # Build arm64 slice (macOS 11.0+)
-          swiftc -target arm64-apple-macosx11.0 -O \
-            $(find TeachingProtect -name "*.swift") \
-            -o SlideLock_arm64 || echo "arm64 build failed"
-            
-          # Combine into Universal Binary if both exist, otherwise use one
-          if [ -f SlideLock_x86_64 ] && [ -f SlideLock_arm64 ]; then
-            lipo -create -output build_output/SlideLock SlideLock_x86_64 SlideLock_arm64
-          elif [ -f SlideLock_x86_64 ]; then
-            mv SlideLock_x86_64 build_output/SlideLock
-          elif [ -f SlideLock_arm64 ]; then
-            mv SlideLock_arm64 build_output/SlideLock
-          else
-            echo "Both builds failed!"
-            exit 1
-          fi
+            -o build_output/SlideLock || { echo "x86_64 build failed"; exit 1; }
 
       - name: Package App Shell
         run: |
